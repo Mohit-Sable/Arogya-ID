@@ -1,176 +1,350 @@
-# 🏥 Health ID — Portable Digital Health Record System
+# 🏥 Arogya-ID — Portable Digital Health Record System
 
-A full-stack digital health record platform that links a single unique Health ID to a person's complete medical history, with an emergency-access mode that lets first responders retrieve life-critical info via QR scan — **no login required**.
+<p align="center">
+  A unified digital healthcare identity that makes medical records accessible, portable, and secure.
+</p>
 
-## ✨ Features
+<p align="center">
+  <img src="https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js-API-000000?style=for-the-badge&logo=express&logoColor=white" />
+  <img src="https://img.shields.io/badge/SQLite-Database-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
+</p>
 
-### MVP (Implemented)
-- **🆔 Health ID Generation** — Unique UUID-based Health ID with QR code on registration
-- **🔐 Patient Auth & Profile** — JWT auth with RBAC (5 roles), editable health profile
-- **👨‍⚕️ Hospital/Doctor Portal** — Add diagnoses, prescriptions, surgeries, vaccinations, discharge summaries
-- **🚨 Emergency Mode** — Public endpoint returning ONLY blood group, allergies, emergency contact, major conditions (no login needed)
-- **✅ Consent-Based Access** — Hospitals/insurers request access; patients approve/deny from dashboard
-- **📝 Access Audit Log** — Every record access (including emergency) is timestamped and logged
-- **📁 Document Vault** — Upload reports, X-rays, prescriptions (local filesystem, S3-swappable)
-- **📋 Chronological Timeline** — All medical events sorted by date with expandable details
-- **🤖 AI Health Summary** — Stub LLM endpoint for generating plain-language summaries
+---
 
-### Roles
-| Role | Capabilities |
-|------|-------------|
-| **Patient** | View records, manage profile, approve/deny consent, view access logs, upload documents |
-| **Hospital/Doctor** | Search patients, request consent, add medical records |
-| **Insurer** | Search patients, request consent, view verified health history |
-| **Emergency Responder** | Access critical info via QR scan (no login) |
-| **Pharmacist** | View prescriptions (consent required) |
+## 📌 Overview
 
-## 🛠️ Tech Stack
+**Arogya-ID** is a full-stack digital healthcare platform designed to create a unified and portable medical identity for individuals.
+
+The platform connects a patient's medical history to a unique Health ID, allowing authorized healthcare providers to access relevant medical information through a secure, consent-driven system.
+
+It also introduces a QR-based emergency access mechanism that enables first responders to retrieve essential medical information without requiring authentication.
+
+By combining digital health records, role-based authorization, patient consent, and emergency accessibility, Arogya-ID aims to make healthcare information more connected and accessible.
+
+## 🎯 Problem Statement
+
+Healthcare records are often fragmented across hospitals, clinics, laboratories, and physical documents.
+
+This creates several challenges:
+
+- Patients struggle to access their complete medical history across different healthcare providers.
+- Doctors may lack access to important medical information during consultations.
+- Emergency responders may not know a patient's blood group, allergies, or existing medical conditions.
+- Sharing medical records without proper authorization creates privacy concerns.
+- Patients have limited visibility into who accesses their medical information.
+
+## 💡 Our Solution
+
+Arogya-ID addresses these challenges through a centralized digital health identity.
+
+Each patient receives a unique Health ID linked to their medical records. Healthcare providers can request access to patient information, while patients retain control over permissions.
+
+In emergencies, authorized essential information can be retrieved through a QR-based public access mechanism without exposing the patient's complete medical history.
+
+## ✨ Key Features
+
+### 1. Unique Digital Health ID
+- UUID-based unique Health ID generation.
+- QR code generation during patient registration.
+- Centralized identity linked to medical records.
+
+### 2. Secure Authentication & Authorization
+- JWT-based authentication.
+- Role-Based Access Control (RBAC).
+- Password hashing using bcrypt.
+- Five distinct user roles.
+
+### 3. Emergency QR Access
+- Retrieve essential medical information through a QR code.
+- No login required for emergency access.
+- Displays only approved critical information:
+  - Blood group
+  - Allergies
+  - Emergency contact
+  - Major medical conditions
+- Emergency access is recorded in the audit log.
+
+### 4. Consent-Based Medical Record Sharing
+- Hospitals and insurers can request patient record access.
+- Patients can approve or reject access requests.
+- Medical records remain restricted until consent is granted.
+- Access permissions are enforced by the backend.
+
+### 5. Comprehensive Medical Records
+Healthcare providers can maintain:
+- Diagnoses
+- Prescriptions
+- Surgical history
+- Vaccination records
+- Discharge summaries
+- Medical documents and reports
+
+### 6. Medical Document Vault
+- Upload medical reports and prescriptions.
+- Store X-rays and supporting documents.
+- Local filesystem storage with an S3-compatible migration path.
+
+### 7. Chronological Medical Timeline
+- Medical events organized by date.
+- Expandable record details.
+- Unified view of a patient's medical journey.
+
+### 8. Access Audit Logging
+- Timestamped record access.
+- Emergency access tracking.
+- Visibility into who accessed medical information.
+
+### 9. AI Health Summary
+- AI summary endpoint for converting medical information into plain-language summaries.
+- Currently implemented as a stub endpoint for future LLM integration.
+
+## 👥 User Roles
+
+| Role | Responsibilities |
+|---|---|
+| Patient | Manage profile, view records, upload documents, control consent and monitor access logs |
+| Hospital / Doctor | Search patients, request consent and manage medical records |
+| Insurer | Request authorized access to verified medical history |
+| Emergency Responder | Retrieve essential emergency information through QR access |
+| Pharmacist | View prescriptions with patient consent |
+
+## 🛠️ Technology Stack
 
 | Layer | Technology |
-|-------|-----------|
-| Frontend | React (Vite), React Router, Axios, react-qr-code |
-| Backend | Node.js, Express 4.x, REST API |
-| SQL Database | SQLite via Sequelize (swappable to PostgreSQL) |
-| Document Database | MongoDB via Mongoose |
-| Auth | JWT + bcrypt, Role-Based Access Control |
-| Validation | Zod schema validation |
-| File Storage | Local filesystem (multer, S3-swappable) |
-| Testing | Jest + Supertest |
+|---|---|
+| Frontend | React, Vite |
+| Routing | React Router |
+| API Communication | Axios |
+| QR Code | react-qr-code |
+| Backend | Node.js, Express.js |
+| Authentication | JWT, bcrypt |
+| Validation | Zod |
+| Relational Database | SQLite, Sequelize |
+| Document Database | MongoDB, Mongoose |
+| File Uploads | Multer |
+| Testing | Jest, Supertest |
 
-## 🚀 Quick Start
+## 🏗️ System Architecture
+
+```text
+             PATIENT / HEALTHCARE USERS
+                       |
+                       v
+                REACT FRONTEND
+                 (Vite + Axios)
+                       |
+                       v
+                EXPRESS REST API
+                       |
+          +------------+------------+
+          |            |            |
+          v            v            v
+      AUTH & RBAC   CONSENT      VALIDATION
+       MIDDLEWARE   MANAGEMENT      (ZOD)
+          |            |            |
+          +------------+------------+
+                       |
+                       v
+                 SERVICE LAYER
+                       |
+             +---------+---------+
+             |                   |
+             v                   v
+        SQLITE DATABASE      MONGODB
+        (Identity, Auth,     (Medical Records,
+         Consent, Logs)       Documents)
+             |                   |
+             +---------+---------+
+                       |
+                       v
+                AUDIT LOGGING
+```
+
+## 🔐 Security & Privacy
+
+Security and patient privacy are important parts of Arogya-ID.
+
+Implemented security measures include:
+
+- Password hashing using bcrypt with 12 salt rounds.
+- JWT authentication with 24-hour token expiry.
+- Role-based authorization.
+- Zod request validation.
+- Consent defaults to denied.
+- Emergency endpoint restricted to a four-field allowlist.
+- Timestamped access logs for medical record access.
+- Backend-enforced access control.
+
+**Privacy principle:** Emergency access provides only essential medical information rather than exposing the complete patient record.
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- **Node.js** 18+ 
-- **MongoDB** running locally (or Atlas URI)
-- **npm** 9+
 
-### 1. Clone & Install
+Install the following before running the application:
+
+- Node.js 18+
+- npm 9+
+- MongoDB (local installation or MongoDB Atlas)
+- Git
+
+### 1. Clone the Repository
 
 ```bash
-# Backend
-cd backend
-npm install
+git clone https://github.com/Mohit-Sable/Arogya-ID.git
+```
 
-# Frontend
-cd ../frontend
+### 2. Navigate to the Project
+
+```bash
+cd Arogya-ID
+```
+
+### 3. Configure the Backend
+
+```bash
+cd backend
 npm install
 ```
 
-### 2. Configure Environment
+Create your environment configuration:
 
 ```bash
-cd backend
 cp .env.example .env
-# Edit .env if needed (defaults work for local development)
 ```
 
-### 3. Seed Demo Data
+Update the environment variables if required.
+
+### 4. Seed Demo Data
 
 ```bash
-cd backend
 npm run seed
 ```
 
-This creates demo users with credentials:
+This generates demo accounts for testing different application roles.
 
-| Role | Email | Password |
-|------|-------|----------|
-| Patient | `patient@demo.com` | `patient123` |
-| Hospital | `doctor@cityhospital.com` | `hospital123` |
-| Insurer | `claims@healthinsure.com` | `insurer123` |
-
-The seed script prints the patient's **Health ID** — save it for the emergency QR demo.
-
-### 4. Start Development Servers
+### 5. Start the Backend
 
 ```bash
-# Terminal 1 — Backend (port 5000)
-cd backend
-npm run dev
-
-# Terminal 2 — Frontend (port 5173)
-cd frontend
 npm run dev
 ```
 
-Open **http://localhost:5173** in your browser.
+The backend runs on:
 
-## 🎯 Demo Walkthrough
+```text
+http://localhost:5000
+```
 
-### Flow 1: Patient Registration & QR Code
-1. Go to http://localhost:5173/login
-2. Click **Create Account** → Enter name, email, password → Select **Patient** role
-3. See your Health ID and QR code on the dashboard
-4. Fill in your health profile (blood group, allergies, medications, etc.)
+### 6. Configure the Frontend
 
-### Flow 2: Hospital Adds Records
-1. Login as `doctor@cityhospital.com` / `hospital123`
-2. Paste the patient's Health ID in the search bar
-3. Click **Request Access** → Switch to patient dashboard → **Approve** the consent
-4. Back in hospital portal → Add a diagnosis/prescription → See it appear in patient's timeline
+Open a new terminal:
 
-### Flow 3: Emergency QR Scan (No Login!)
-1. Open an **incognito window** (or any browser with no login)
-2. Navigate to: `http://localhost:5173/emergency/{HEALTH_ID}`
-3. See ONLY: blood group (large), allergies, emergency contact, major conditions
-4. Switch to patient dashboard → Check **Access Logs** tab → See the emergency access logged
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-### Flow 4: Consent Controls
-1. Login as insurer (`claims@healthinsure.com` / `insurer123`)
-2. Search for patient → Request access → See "Pending" status
-3. Switch to patient → **Deny** the request
-4. Back as insurer → Attempt to view records → Get **403 Forbidden**
+The frontend runs on:
 
-## 🧪 Running Tests
+```text
+http://localhost:5173
+```
+
+Open the application in your browser:
+
+http://localhost:5173
+
+## 🧪 Testing
+
+Run the backend test suite:
 
 ```bash
 cd backend
 npm test
 ```
 
-Tests cover:
-- ✅ JWT auth middleware (valid/invalid/expired tokens)
-- ✅ RBAC middleware (role enforcement, boundary conditions)
-- ✅ Emergency mode field filter (asserts prescriptions/diagnoses/documents are NOT returned)
-- ✅ Consent flow logic (pending → approved/denied, ownership checks, no auto-approve)
+The existing tests cover:
 
-## 📁 Project Structure
+- JWT authentication middleware.
+- Role-based access control.
+- Emergency information field filtering.
+- Patient consent workflows.
+- Authorization and ownership checks.
+- Prevention of unauthorized medical record access.
 
+## 📂 Project Structure
+
+```text
+Arogya-ID/
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── models/
+│   │   │   ├── mongo/
+│   │   │   └── sql/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── middleware/
+│   │   ├── utils/
+│   │   ├── app.js
+│   │   └── server.js
+│   │
+│   └── tests/
+│
+├── frontend/
+│   └── src/
+│       ├── pages/
+│       ├── components/
+│       ├── api/
+│       ├── context/
+│       ├── App.jsx
+│       └── index.css
+│
+├── package.json
+└── README.md
 ```
-/backend
-  /src
-    /config          # DB connections (Sequelize + Mongoose)
-    /models
-      /mongo         # MedicalRecord, Document (Mongoose schemas)
-      /sql           # User, HealthIdMapping, AccessLog, ConsentRecord (Sequelize)
-    /routes          # auth, patient, hospital, emergency, consent, document
-    /controllers     # Thin handlers (validation + delegation)
-    /services        # All business logic (consent checks, field filtering, etc.)
-    /middleware      # auth (JWT), rbac, auditLog
-    /utils           # qrGenerator, hashChain, seed
-    app.js           # Express setup (no listen)
-    server.js        # DB connect + listen
-  /tests             # Jest test suites
-/frontend
-  /src
-    /pages           # Login, PatientDashboard, HospitalPortal, InsurerPortal, EmergencyView
-    /components      # Navbar, Timeline, RecordCard, QRDisplay
-    /api             # Axios client + API wrappers
-    /context         # AuthContext (JWT + role state)
-    App.jsx          # React Router setup
-    index.css        # Design system (dark theme, glassmorphism)
-```
 
-## 🔒 Security Notes
+## 🔮 Future Enhancements
 
-- Passwords hashed with **bcrypt** (12 salt rounds)
-- JWT tokens expire after 24 hours
-- Emergency endpoint **hard-enforces** a 4-field allowlist at the service layer
-- All request bodies validated with **Zod** schemas
-- Consent defaults to **denied** — no auto-approve
-- Every access (emergency + full-record) creates an immutable **AccessLog** entry
-- CORS restricted to localhost origins
+Potential improvements for future versions:
 
-## 📝 License
+- Integration with India's Ayushman Bharat Digital Mission (ABDM).
+- ABHA-compatible health identity interoperability.
+- FHIR-based medical record exchange.
+- Cloud-based encrypted document storage.
+- Advanced AI-powered medical record summarization.
+- Multi-factor authentication.
+- Mobile application for patients and healthcare providers.
+- Advanced analytics for healthcare providers.
 
-MIT — Built for WeMakeDevs Hackathon
+## 🎯 Project Objectives
+
+Arogya-ID focuses on:
+
+1. Making medical records portable across healthcare providers.
+2. Improving emergency response through QR-based access.
+3. Giving patients control over medical data sharing.
+4. Improving healthcare information accessibility.
+5. Building a secure and scalable digital healthcare infrastructure.
+
+## 👨‍💻 Author
+
+**Mohit Sable**
+
+GitHub: [@Mohit-Sable](https://github.com/Mohit-Sable)
+
+Project: [Arogya-ID](https://github.com/Mohit-Sable/Arogya-ID)
+
+---
+
+<p align="center">
+  <b>Building a more connected, accessible, and patient-centric healthcare ecosystem.</b>
+  <br/><br/>
+  ⭐ If you find this project interesting, consider giving it a star!
+</p>
